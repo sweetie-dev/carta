@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Amor à Distância</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Satisfy&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Dancing Script', cursive;
+            background-color: #ffe6e6;
+            background-image: linear-gradient(315deg, #ffe6e6 0%, #ffd6e7 74%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .title {
+            font-family: 'Pacifico', cursive;
+            color: #ff3366;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-family: 'Satisfy', cursive;
+        }
+        
+        .polaroid {
+            background-color: white;
+            padding: 15px 15px 45px 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transform: rotate(0deg);
+            transition: all 0.3s ease;
+            max-width: 280px;
+            margin: 20px;
+            position: relative;
+        }
+        
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .polaroid-1 { transform: rotate(-3deg); }
+        .polaroid-2 { transform: rotate(2deg); }
+        .polaroid-3 { transform: rotate(-2deg); }
+        .polaroid-4 { transform: rotate(3deg); }
+        
+        .polaroid-1:hover { transform: scale(1.05) rotate(-3deg); }
+        .polaroid-2:hover { transform: scale(1.05) rotate(2deg); }
+        .polaroid-3:hover { transform: scale(1.05) rotate(-2deg); }
+        .polaroid-4:hover { transform: scale(1.05) rotate(3deg); }
+        
+        .polaroid-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+        
+        .polaroid-caption {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff3366;
+            transform: rotate(45deg);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background-color: #ff3366;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .heart::after {
+            top: 0;
+            left: -15px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.2); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+        
+        .love-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.2);
+            max-width: 600px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .love-card::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            background-color: #ff3366;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .love-card::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            background-color: #ff3366;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 10s linear infinite;
+            color: #ff3366;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .countdown {
+            font-family: 'Satisfy', cursive;
+            font-size: 1.5rem;
+            color: #ff3366;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-10">
+            <h1 class="title text-5xl md:text-6xl mb-4">Eu amo amar você</h1>
+            <p class="subtitle text-2xl text-pink-700">eu não vejo a hora de te ver</p>
+        </header> 
+        
+        <div class="love-card">
+            <h2 class="title text-3xl mb-4 text-center">Meu Amor,</h2>
+            <p class="text-xl mb-6">
+                Mesmo com a distância entre nós, minha alma não para de pensar em você. 
+                Cada dia que passa a saudade só aumenta. mal posso esperar para te encontrar, 
+                e estarei aqui esperando, contando os dias para sentir seu abraço novamente. Cada segundo vale a pena esperar por você!
+            </p>
+            <p class="text-xl mb-6">
+                queria tanto poder demonstrar muito mais, ahah Eu amo amar você, meu amor.
+            </p>
+            <p class="text-xl text-right">com muito carinho</p>
+            <p class="text-xl text-right subtitle">Só sua noiva</p>
+        </div>
+        
+        <h2 class="title text-4xl text-center my-10">Nosso dia </h2>
+        
+        <div class="flex flex-wrap justify-center" id="polaroidContainer">
+            <div class="polaroid polaroid-1">
+                <div class="polaroid-img">Foto 1</div>
+                <p class="polaroid-caption">Nosso primeiro encontro</p>
+            </div>
+            
+            <div class="polaroid polaroid-2">
+                <div class="polaroid-img">Foto 2</div>
+                <p class="polaroid-caption">Aquele pôr do sol inesquecível</p>
+            </div>
+            
+            <div class="polaroid polaroid-3">
+                <div class="polaroid-img">Foto 3</div>
+                <p class="polaroid-caption">Nosso lugar favorito</p>
+            </div>
+            
+            <div class="polaroid polaroid-4">
+                <div class="polaroid-img">Foto 4</div>
+                <p class="polaroid-caption">Momentos de risadas</p>
+            </div>
+        </div>
+        
+        <div class="love-card mt-16">
+            <h2 class="title text-3xl mb-4 text-center">Promessas de Amor</h2>
+            <ul class="text-xl space-y-4">
+                <li>💌 Te escrever todos os dias</li>
+                <li>💭 Pensar em você antes de dormir</li>
+                <li>💞 Guardar nossos sonhos com carinho</li>
+                <li>🌟 Contar as estrelas até você voltar</li>
+                <li>💑 Planejar nosso futuro juntos</li>
+            </ul>
+            
+            <div class="mt-8 text-center">
+                <p class="text-2xl subtitle text-pink-700">"A distância é apenas um teste para ver quão longe o amor pode viajar"</p>
+            </div>
+        </div>
+    </div>
+<!-- Rodapé -->
+<footer class="text-center mt-16 pb-8">
+    <p class="romantic-title text-2xl text-pink-600 mb-2">Com todo meu amor</p>
+    <p class="text-pink-500">Feito especialmente para você ❤️</p>
+</footer>
+    <script>
+        // Criar corações flutuantes
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💓'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Posição aleatória
+                const startX = Math.random() * window.innerWidth;
+                heart.style.left = startX + 'px';
+                
+                // Velocidade e atraso aleatórios
+                const duration = 5 + Math.random() * 10;
+                const delay = Math.random() * 5;
+                heart.style.animation = `float ${duration}s linear ${delay}s infinite`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Configurar contagem regressiva
+        function setupCountdown() {
+            // Data futura (30 dias a partir de hoje)
+            const futureDate = new Date();
+            futureDate.setDate(futureDate.getDate() + 30);
+            
+            function updateCountdown() {
+                const now = new Date();
+                const diff = futureDate - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown').textContent = 
+                    `${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+        
+        // Inicializar tudo quando a página carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            createFloatingHearts();
+            setupCountdown();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94c2939473d9f63e',t:'MTc0OTMyNDc1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
