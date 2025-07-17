@@ -13,6 +13,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+        
         const firebaseConfig = {
           apiKey: "AIzaSyAC7EWDFQHAexsSarg8HoSwycGC6j8hzlU",
           authDomain: "site-do-meu-noivo.firebaseapp.com",
@@ -26,6 +28,10 @@
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+        
+        // Disponibilizar Firebase para o script principal
+        window.firebaseData = { db, ref, set, get };
     </script>
 
     <style>
@@ -448,6 +454,7 @@
         // Inicializar tudo quando a página carregar
         window.addEventListener('DOMContentLoaded', () => {
             createFloatingHearts();
+            setupLikeButtons();
 
             function updateRomanticTimer() {
                 const startDate = new Date(2025, 4, 21, 0, 0, 0); // 21 de maio de 2025
@@ -502,16 +509,13 @@
             }, 1100);
         }
 
-        function setupLikeButtons() {
-            const likeBtns = document.querySelectorAll('.like-btn');
-            const likeCounts = document.querySelectorAll('.like-count');
-            const likeHearts = document.querySelectorAll('.like-heart');
-            const likeAnims = document.querySelectorAll('.like-anim');
-            const counts = [0, 0, 0, 0];
-
-            // Carrega curtidas do Firebase
-            async function loadLikes() {
+        // Carrega curtidas do Firebase
+        async function loadLikes() {
+            try {
                 const { db, ref, get } = window.firebaseData;
+                const likeCounts = document.querySelectorAll('.like-count');
+                const counts = [0, 0, 0, 0];
+                
                 for (let i = 0; i < 4; i++) {
                     const snapshot = await get(ref(db, 'likes/' + i));
                     if (snapshot.exists()) {
@@ -519,35 +523,50 @@
                         likeCounts[i].textContent = counts[i];
                     }
                 }
+                return counts;
+            } catch (error) {
+                console.log('Erro ao carregar curtidas:', error);
+                return [0, 0, 0, 0];
             }
+        }
 
-            // Atualiza curtidas no Firebase
-            function updateLikeInFirebase(index) {
+        // Atualiza curtidas no Firebase
+        async function updateLikeInFirebase(index, count) {
+            try {
                 const { db, ref, set } = window.firebaseData;
-                set(ref(db, 'likes/' + index), counts[index]);
+                await set(ref(db, 'likes/' + index), count);
+            } catch (error) {
+                console.log('Erro ao salvar curtida:', error);
             }
+        }
+
+        function setupLikeButtons() {
+            const likeBtns = document.querySelectorAll('.like-btn');
+            const likeCounts = document.querySelectorAll('.like-count');
+            const likeHearts = document.querySelectorAll('.like-heart');
+            const likeAnims = document.querySelectorAll('.like-anim');
+            let counts = [0, 0, 0, 0];
+
+            // Carrega dados iniciais
+            loadLikes().then(loadedCounts => {
+                counts = loadedCounts;
+                likeCounts.forEach((countEl, i) => {
+                    countEl.textContent = counts[i];
+                });
+            });
 
             // Configura os botões
-            function setupLikeButtons() {
-                likeBtns.forEach((btn, i) => {
-                    btn.addEventListener('click', () => {
-                        counts[i]++;
-                        likeCounts[i].textContent = counts[i];
-                        likeHearts[i].textContent = '❤️';
-                        createLikeHeartAnim(likeAnims[i]);
-                        updateLikeInFirebase(i); // salva no Firebase
-                        setTimeout(() => {
-                            likeHearts[i].textContent = '🤍';
-                        }, 600);
-                    });
+            likeBtns.forEach((btn, i) => {
+                btn.addEventListener('click', async () => {
+                    counts[i]++;
+                    likeCounts[i].textContent = counts[i];
+                    likeHearts[i].textContent = '❤️';
+                    createLikeHeartAnim(likeAnims[i]);
+                    await updateLikeInFirebase(i, counts[i]); // salva no Firebase
+                    setTimeout(() => {
+                        likeHearts[i].textContent = '🤍';
+                    }, 600);
                 });
-            }
-
-            // Inicialização
-            window.addEventListener('DOMContentLoaded', async () => {
-                createFloatingHearts();
-                await loadLikes(); // carrega os dados
-                setupLikeButtons();
             });
         }
     </script>
