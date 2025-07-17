@@ -11,22 +11,19 @@
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="module">
-
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
-
         const firebaseConfig = {
-            apiKey: "AIzaSyAC7EWDFQHAexsSarg8HoSwycGC6j8hzlU",
-            authDomain: "site-do-meu-noivo.firebaseapp.com",
-            databaseURL: "https://site-do-meu-noivo-default-rtdb.firebaseio.com",
-            projectId: "site-do-meu-noivo",
-            storageBucket: "site-do-meu-noivo.firebasestorage.app",
-            messagingSenderId: "792610837511",
-            appId: "1:792610837511:web:7584e0e13be406ae7a86a2",
-            measurementId: "G-7WEDC3EEFP"
+          apiKey: "AIzaSyAC7EWDFQHAexsSarg8HoSwycGC6j8hzlU",
+          authDomain: "site-do-meu-noivo.firebaseapp.com",
+          databaseURL: "https://site-do-meu-noivo-default-rtdb.firebaseio.com",
+          projectId: "site-do-meu-noivo",
+          storageBucket: "site-do-meu-noivo.firebasestorage.app",
+          messagingSenderId: "792610837511",
+          appId: "1:792610837511:web:7584e0e13be406ae7a86a2",
+          measurementId: "G-7WEDC3EEFP"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
     </script>
@@ -552,24 +549,7 @@
                 await loadLikes(); // carrega os dados
                 setupLikeButtons();
             });
-
-            likeBtns.forEach((btn, i) => {
-                btn.addEventListener('click', () => {
-                    counts[i]++;
-                    likeCounts[i].textContent = counts[i];
-                    likeHearts[i].textContent = '❤️';
-                    createLikeHeartAnim(likeAnims[i]);
-                    setTimeout(() => {
-                        likeHearts[i].textContent = '🤍';
-                    }, 600);
-                });
-            });
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            createFloatingHearts();
-            setupLikeButtons();
-        });
     </script>
 </body>
 
