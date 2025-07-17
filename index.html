@@ -10,6 +10,27 @@
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Satisfy&display=swap"
         rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAC7EWDFQHAexsSarg8HoSwycGC6j8hzlU",
+            authDomain: "site-do-meu-noivo.firebaseapp.com",
+            databaseURL: "https://site-do-meu-noivo-default-rtdb.firebaseio.com",
+            projectId: "site-do-meu-noivo",
+            storageBucket: "site-do-meu-noivo.firebasestorage.app",
+            messagingSenderId: "792610837511",
+            appId: "1:792610837511:web:7584e0e13be406ae7a86a2",
+            measurementId: "G-7WEDC3EEFP"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+
     <style>
         body {
             font-family: 'Dancing Script', cursive;
@@ -329,12 +350,26 @@
                 <div class="polaroid-img">
                     <img src="img/foto1.jpg" alt="Nosso primeiro encontro" class="w-full h-full object-cover">
                 </div>
+                <div class="like-area flex items-center justify-center mt-2">
+                    <button class="like-btn focus:outline-none" data-index="0">
+                        <span class="like-heart text-2xl">🤍</span>
+                    </button>
+                    <span class="like-count ml-2 text-pink-600 font-bold">0</span>
+                    <div class="like-anim absolute left-1/2 top-1/2 pointer-events-none" style="display:none;"></div>
+                </div>
                 <p class="polaroid-caption">Eu amo nosso dia</p>
             </div>
 
             <div class="polaroid polaroid-2">
                 <div class="polaroid-img">
                     <img src="img/foto2.jpg" alt="Nosso primeiro encontro" class="w-full h-full object-cover">
+                </div>
+                <div class="like-area flex items-center justify-center mt-2">
+                    <button class="like-btn focus:outline-none" data-index="1">
+                        <span class="like-heart text-2xl">🤍</span>
+                    </button>
+                    <span class="like-count ml-2 text-pink-600 font-bold">0</span>
+                    <div class="like-anim absolute left-1/2 top-1/2 pointer-events-none" style="display:none;"></div>
                 </div>
                 <p class="polaroid-caption">Amo sentir você</p>
             </div>
@@ -343,12 +378,26 @@
                 <div class="polaroid-img">
                     <img src="img/foto3.jpg" alt="Nosso primeiro encontro" class="w-full h-full object-cover">
                 </div>
+                <div class="like-area flex items-center justify-center mt-2">
+                    <button class="like-btn focus:outline-none" data-index="2">
+                        <span class="like-heart text-2xl">🤍</span>
+                    </button>
+                    <span class="like-count ml-2 text-pink-600 font-bold">0</span>
+                    <div class="like-anim absolute left-1/2 top-1/2 pointer-events-none" style="display:none;"></div>
+                </div>
                 <p class="polaroid-caption">Apenas o meu noivo</p>
             </div>
 
             <div class="polaroid polaroid-4">
                 <div class="polaroid-img">
                     <img src="img/foto4.jpg" alt="Nosso primeiro encontro" class="w-full h-full object-cover">
+                </div>
+                <div class="like-area flex items-center justify-center mt-2">
+                    <button class="like-btn focus:outline-none" data-index="3">
+                        <span class="like-heart text-2xl">🤍</span>
+                    </button>
+                    <span class="like-count ml-2 text-pink-600 font-bold">0</span>
+                    <div class="like-anim absolute left-1/2 top-1/2 pointer-events-none" style="display:none;"></div>
                 </div>
                 <p class="polaroid-caption">Muita saudade</p>
             </div>
@@ -379,63 +428,149 @@
         // Criar corações flutuantes
         function createFloatingHearts() {
             const heartsContainer = document.getElementById('floatingHearts');
-            const heartSymbols = ['❤️', '💕', '💖', '💗', '💓','🩷'];
-    
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💓', '🩷'];
+
             for (let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.classList.add('floating-heart');
                 heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-    
+
                 // Posição aleatória
                 const startX = Math.random() * window.innerWidth;
                 heart.style.left = startX + 'px';
-    
+
                 // Velocidade e atraso aleatórios
                 const duration = 5 + Math.random() * 10;
                 const delay = Math.random() * 5;
                 heart.style.animation = `float ${duration}s linear ${delay}s infinite`;
-    
+
                 heartsContainer.appendChild(heart);
             }
         }
-    
+
         // Inicializar tudo quando a página carregar
         window.addEventListener('DOMContentLoaded', () => {
             createFloatingHearts();
-    
+
             function updateRomanticTimer() {
                 const startDate = new Date(2025, 4, 21, 0, 0, 0); // 21 de maio de 2025
                 const now = new Date();
-    
+
                 if (now < startDate) {
                     document.getElementById('timer-months').textContent = 0;
                     document.getElementById('timer-days').textContent = 0;
                     document.getElementById('timer-hours').textContent = 0;
                     return;
                 }
-    
+
                 let totalMonths = (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
                 let lastMonthDate = new Date(startDate.getTime());
                 lastMonthDate.setMonth(startDate.getMonth() + totalMonths);
-    
+
                 if (now < lastMonthDate) {
                     totalMonths--;
                     lastMonthDate.setMonth(lastMonthDate.getMonth() - 1);
                 }
-    
+
                 const diff = now - lastMonthDate;
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    
+
                 document.getElementById('timer-months').textContent = totalMonths;
                 document.getElementById('timer-days').textContent = days;
                 document.getElementById('timer-hours').textContent = hours;
             }
-    
+
             updateRomanticTimer();
             setInterval(updateRomanticTimer, 1000);
         });
-    </script>
-</body >
 
-</html >
+        // --- NOVO: Curtidas nas polaroids ---
+        function createLikeHeartAnim(container) {
+            const heart = document.createElement('span');
+            heart.textContent = ['❤️', '💕', '💖', '💗', '💓', '🩷'][Math.floor(Math.random() * 6)];
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 40 - 20 + 'px';
+            heart.style.bottom = '0px';
+            heart.style.fontSize = '1.5rem';
+            heart.style.opacity = 1;
+            heart.style.transition = 'all 1s ease';
+            container.appendChild(heart);
+            setTimeout(() => {
+                heart.style.transform = 'translateY(-60px) scale(1.5)';
+                heart.style.opacity = 0;
+            }, 10);
+            setTimeout(() => {
+                heart.remove();
+            }, 1100);
+        }
+
+        function setupLikeButtons() {
+            const likeBtns = document.querySelectorAll('.like-btn');
+            const likeCounts = document.querySelectorAll('.like-count');
+            const likeHearts = document.querySelectorAll('.like-heart');
+            const likeAnims = document.querySelectorAll('.like-anim');
+            const counts = [0, 0, 0, 0];
+
+            // Carrega curtidas do Firebase
+            async function loadLikes() {
+                const { db, ref, get } = window.firebaseData;
+                for (let i = 0; i < 4; i++) {
+                    const snapshot = await get(ref(db, 'likes/' + i));
+                    if (snapshot.exists()) {
+                        counts[i] = snapshot.val();
+                        likeCounts[i].textContent = counts[i];
+                    }
+                }
+            }
+
+            // Atualiza curtidas no Firebase
+            function updateLikeInFirebase(index) {
+                const { db, ref, set } = window.firebaseData;
+                set(ref(db, 'likes/' + index), counts[index]);
+            }
+
+            // Configura os botões
+            function setupLikeButtons() {
+                likeBtns.forEach((btn, i) => {
+                    btn.addEventListener('click', () => {
+                        counts[i]++;
+                        likeCounts[i].textContent = counts[i];
+                        likeHearts[i].textContent = '❤️';
+                        createLikeHeartAnim(likeAnims[i]);
+                        updateLikeInFirebase(i); // salva no Firebase
+                        setTimeout(() => {
+                            likeHearts[i].textContent = '🤍';
+                        }, 600);
+                    });
+                });
+            }
+
+            // Inicialização
+            window.addEventListener('DOMContentLoaded', async () => {
+                createFloatingHearts();
+                await loadLikes(); // carrega os dados
+                setupLikeButtons();
+            });
+
+            likeBtns.forEach((btn, i) => {
+                btn.addEventListener('click', () => {
+                    counts[i]++;
+                    likeCounts[i].textContent = counts[i];
+                    likeHearts[i].textContent = '❤️';
+                    createLikeHeartAnim(likeAnims[i]);
+                    setTimeout(() => {
+                        likeHearts[i].textContent = '🤍';
+                    }, 600);
+                });
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createFloatingHearts();
+            setupLikeButtons();
+        });
+    </script>
+</body>
+
+</html>
