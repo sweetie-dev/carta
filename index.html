@@ -585,6 +585,42 @@
                 padding: 0.5rem 1rem;
             }
         }
+        .polaroid-carousel {
+            display: flex;
+            flex-direction: row;
+            gap: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 24px;
+            scroll-behavior: smooth;
+            margin-bottom: 2rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .polaroid-carousel::-webkit-scrollbar {
+            height: 8px;
+            background: transparent;
+        }
+        .polaroid-carousel::-webkit-scrollbar-thumb {
+            background: #ffd6e7;
+            border-radius: 4px;
+        }
+        .polaroid {
+            min-width: 260px;
+            max-width: 280px;
+            flex: 0 0 auto;
+            /* já tem margin, mas gap cuida do espaçamento */
+        }
+        @media (max-width: 700px) {
+            .polaroid-carousel {
+                gap: 16px;
+                padding-bottom: 12px;
+                margin-bottom: 1rem;
+            }
+            .polaroid {
+                min-width: 200px;
+                max-width: 220px;
+            }
+        }
     </style>
 </head>
 
@@ -654,7 +690,7 @@
 
         <h2 class="title text-4xl text-center my-10">Nosso dia </h2>
 
-        <div class="flex flex-wrap justify-center" id="polaroidContainer">
+        <div class="polaroid-carousel" id="polaroidContainer">
             <div class="polaroid polaroid-1">
                 <div class="polaroid-img">
                     <img src="img/foto1.jpg" alt="Nosso primeiro encontro" class="w-full h-full object-cover">
